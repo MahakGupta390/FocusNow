@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FocusNow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<script src="script.js"></script>
+<body>
+  <header class="header">
+    <div class="logo">FocusNow</div>
+    <nav class="nav">
+      <a href="#hero">Home</a>
+      <a href="#focus-timer">Focus Timer</a>
+      <a href="#tools">Tools</a>
+      <a href="#blocked">Blocked</a>
+    </nav>
+    <!-- <div class="profile">🧘‍♀️</div> -->
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <h1>Eliminate Distractions<br>Unlock Productivity</h1>
+      <p>Stay focused with our minimal distraction-blocking tools and timer.</p>
+      <button class="btn primary" onclick="startFocusMode()">Start Focus Mode</button>
+    </div>
+    <div class="hero-image">
+      <img src="distractionfree.jpg" alt="Focus" height="300px" width="400px" />
+    </div>
+  </section>
+
+  <section class="tools-section" id="focus-timer">
+    <h2>Focus Tools</h2>
+    <!-- <div class="tool-grid"> -->
+      <div class="tool-card">
+        <h3>Focus Timer</h3>
+        <p class="timer-display" id="timer">25:00</p>
+        <label for="focusMinutes">Minutes:</label>
+        <input type="number" id="focusMinutes" min="1" max="60" value="25" oninput="updateInitialDisplay()" />
+      </br>
+        <div class="preset-buttons">
+        <h4>Quick Presets</h4> 
+        <button onclick="setPreset(15)">15m</button>
+        <button onclick="setPreset(25)">25m</button>
+        <button onclick="setPreset(45)">45m</button>
+        <button onclick="setPreset(60)">60m</button>
+        </div>
+
+
+        
+      <div class="timer-buttons">
+          <button class="btn primary" onclick="startTimer()">Start</button>
+          <button class="btn secondary" onclick="resetTimer()">Reset</button>
+        </div> 
+      </div>
+      </section>
+      
+      <section class="tools-section" id="tools">
+      <div class="tool-card">
+
+        <h3>Productive Links</h3>
+        <ul class="link-list">
+          <!-- <li><a href="https://www.notion.so/">📘 Notion</a></li>
+           <li><a href="https://leetcode.com/">🧠 Leetcode</a></li> 
+           <a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer">🧠 Leetcode</a>
+
+          <li><a href="https://docs.google.com/">📝 Google Docs</a></li> -->
+          <div class="add-link-form">
+  <input type="text" id="link-name" placeholder="Site Name (e.g., Medium)" />
+  <input type="url" id="link-url" placeholder="https://medium.com" />
+  <button class="btn primary" onclick="addCustomLink()">Add Link</button>
+</div>
+
+<ul id="custom-links" class="link-list"></ul>
+
+        </ul>
+      </div>
+      </section>
+
+      <section class="tools-section" id="blocked">
+      <div class="tool-card" >
+        <h3>Blocked Sites</h3>
+        <!-- <ul class="link-list">
+          <li><button class="btn disabled" disabled>❌ YouTube</button></li>
+          <li><button class="btn disabled" disabled>❌ Instagram</button></li>
+          <li><button class="btn disabled" disabled>❌ Twitter</button></li>
+          </ul> -->
+
+           <div class="add-block-form">
+    <input type="text" id="blocked-name" placeholder="e.g., Facebook" />
+    <input type="url" id="blocked-url" placeholder="https://www.reddit.com" />
+    <button class="btn primary" onclick="addBlockedSite()">Block Site</button></div>
+  
+  <ul class="link-list" id="custom-blocked"></ul>
+  </div>
+
+        
+    <!-- </div> -->
+  </section>
+  <audio id="alarm-sound" src="alarm.mp3" preload="auto"></audio>
+
+  <footer class="footer">
+    <p>&copy; 2025 FocusNow. All rights reserved.</p>
+  </footer>
+</body>
+</html>
