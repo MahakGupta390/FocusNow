@@ -1,12 +1,25 @@
+
+//ENTIRE TIMER LOGIC
 var timer;
 var timeLeft=25*60;
-function setPreset(minutes) {
-    document.getElementById("focusMinutes").value = minutes;
-    timeLeft = minutes * 60;
-    updateTime(); // update display
+
+function setCustomTime() {
+  const minutes = parseInt(document.getElementById("custom-minutes").value);
+
+  if (isNaN(minutes) || minutes < 1 || minutes > 60) {
+    alert("Please enter a valid number between 1 and 60.");
+    return;
+  }
+
+  timeLeft = minutes * 60;
+  updateTime(); // update display
+  document.getElementById("custom-minutes").value = "";
+
 }
+
+//LOGIC FOR WHAT HAPPENS ON CLICKING START TIMER BUTTON
 function startTimer(){
-    clearInterval(timer)
+    clearInterval(timer);
     timer=setInterval(()=>{
         if(timeLeft<=0){
             clearInterval(timer);
@@ -18,13 +31,15 @@ function startTimer(){
         updateTime();
     },1000);
 }
+//LLOGIC FOR WHAT HAPPENS ON CLICKING RESET TIMER BUTTON
 function resetTimer(){
     clearInterval(timer);
     timeLeft=25*60;
     updateTime();
-
     localStorage.removeItem("focusModeActive");
 }
+
+//LOGIC AS HOW TIME GETS UPDATED ON SCREEN
 function updateTime(){
     const minutes=Math.floor(timeLeft/60);
     const seconds=timeLeft%60;
@@ -32,6 +47,8 @@ function updateTime(){
     var temp=(minutes<10?'0':'')+minutes+':'+(seconds<10?'0':'')+seconds;
     document.getElementById("timer").textContent=temp;
 }
+
+//LOGIC FOR HOW TIME ENTERED BY USER DISPLAYS AS IN A TIMER
 function updateInitialDisplay() {
     var minutes = parseInt(document.getElementById("focusMinutes").value);
     if (isNaN(minutes) || minutes <= 0) {
@@ -41,6 +58,24 @@ function updateInitialDisplay() {
     timeLeft = minutes * 60;
     updateTime();  // Reuse your existing logic
 }
+
+//LOGIC FOR START FOCUS BUTTON
+function startFocusMode() {
+  // 1. Alert the user
+  // alert("Focus Mode Activated and timer has started!!!");
+
+  // 2. Scroll to the Tools section
+  document.querySelector("#focus-timer").scrollIntoView({ behavior: "smooth" });
+
+  // 3. Start the timer
+  startTimer();
+   alert("Focus Mode Activated and timer has started!!!");
+  
+  localStorage.setItem("focusModeActive", "true");
+}
+
+
+
 function addCustomLink() {
   var name = document.getElementById("link-name").value.trim();
   var url = document.getElementById("link-url").value.trim();
@@ -53,35 +88,10 @@ function addCustomLink() {
   links.push({ name, url });
   localStorage.setItem("customProductiveLinks", JSON.stringify(links));
   displayCustomLinks();
-  
-
-  // var list = document.getElementById("custom-links");
-  // var li = document.createElement("li");
-  // var a = document.createElement("a");
-  // a.href = url;
-  // a.target = "_blank";
-  // a.textContent = "🔗 " + name;
-  // var del = document.createElement("button");
-  // del.textContent = "Delete";
-  // del.className = "delete-btn";
-  // del.onclick = function () {
-  //   li.remove();
-  //    const links = JSON.parse(localStorage.getItem("customProductiveLinks")) || [];
-  // const updatedLinks = links.filter(link => !(link.name === name && link.url === url));
-  // localStorage.setItem("customProductiveLinks", JSON.stringify(updatedLinks));
-  // };
-
-  // li.appendChild(a);
-  // li.appendChild(del);
-  // list.appendChild(li);
-
   // Clear input fields
   document.getElementById("link-name").value = "";
   document.getElementById("link-url").value = "";
-  // const links = JSON.parse(localStorage.getItem("customProductiveLinks")) || [];
-  // links.push({ name, url });
-  // localStorage.setItem("customProductiveLinks", JSON.stringify(links));
-  // displayCustomLinks();
+ 
 }
 // displaycustomLinks()
 function displayCustomLinks() {
@@ -92,17 +102,23 @@ function displayCustomLinks() {
 
   links.forEach((link, index) => {
     const li = document.createElement("li");
+     li.className = "mb-2 flex items-center justify-between"; 
 
     const a = document.createElement("a");
     a.href = link.url;
     a.target = "_blank"; // open in new tab
     a.textContent = `🔗 ${link.name}`;
+    a.className = "text-blue-600 font-medium hover:underline";
 
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
+     deleteBtn.className =
+      "ml-4 text-red-500 hover:text-red-700 text-sm border border-red-400 px-2 py-1 rounded";
     deleteBtn.style.marginLeft = "10px";
     deleteBtn.className = "btn secondary";
     deleteBtn.onclick = function () {
+      //  const updated = links.filter((_, i) => i !== index);
+      // localStorage.setItem("customProductiveLinks", JSON.stringify(updated));
       deleteCustomLink(index);
     };
 
@@ -110,6 +126,9 @@ function displayCustomLinks() {
     li.appendChild(deleteBtn);
     list.appendChild(li);
   });
+   document.getElementById("link-name").value = "";
+  document.getElementById("link-url").value = "";
+
 }
 
 function deleteCustomLink(index) {
@@ -118,45 +137,17 @@ function deleteCustomLink(index) {
   localStorage.setItem("customProductiveLinks", JSON.stringify(links));
   displayCustomLinks(); // re-render updated list
 }
-
-
-
-
-// 
 window.onload = function () {
   displayCustomLinks();
   displayBlockedSites();
 };
 
-function startFocusMode() {
-  // 1. Alert the user
-  alert("Focus Mode Activated and timer has started!!!");
 
-  // 2. Scroll to the Tools section
-  document.querySelector(".tools-section").scrollIntoView({ behavior: "smooth" });
-
-  // 3. Start the timer
-  startTimer();
-
-  // 4. Open all productive links in new tabs
-  // const defaultLinks = [
-   
-  //   { name: "Leetcode", url: "https://leetcode.com/" }
-  // ];
-
-  const customLinks = JSON.parse(localStorage.getItem("customProductiveLinks")) || [];
-  const allLinks = customLinks;
-
-  allLinks.forEach(link => {
-    window.open(link.url, "_blank");
-  });
-  localStorage.setItem("focusModeActive", "true");
-}
 
 //Blocked Sites functionality
 function addBlockedSite() {
   //  alert("Blocked site button clicked!");
-  const name = document.getElementById("blocked-name").value.trim();
+  const name = document.getElementById("block-site-name").value.trim();
   const url = document.getElementById("blocked-url").value.trim();
 
   if (!name || !url) return alert("Please enter both name and URL");
@@ -166,12 +157,12 @@ function addBlockedSite() {
   localStorage.setItem("customBlockedSites", JSON.stringify(blocked));
   displayBlockedSites();
 
-  document.getElementById("blocked-name").value = "";
+  document.getElementById("block-site-name").value = "";
   document.getElementById("blocked-url").value = "";
 }
 
 function displayBlockedSites() {
-  const list = document.getElementById("custom-blocked");
+  const list = document.getElementById("custom-blocked-list");
   list.innerHTML = "";
 
   const blocked = JSON.parse(localStorage.getItem("customBlockedSites")) || [];

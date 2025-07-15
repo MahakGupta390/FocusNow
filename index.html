@@ -7,103 +7,174 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Tailwind CSS via CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          focusblue: '#1e40af',
+        },
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
 </head>
 <script src="script.js"></script>
 <body>
-  <header class="header">
-    <div class="logo">FocusNow</div>
-    <nav class="nav">
-      <a href="#hero">Home</a>
-      <a href="#focus-timer">Focus Timer</a>
-      <a href="#tools">Tools</a>
-      <a href="#blocked">Blocked</a>
+   <!-- Header Section -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+    <!-- Logo / Title -->
+    <h1 class="text-xl font-bold text-blue-800">FocusNow</h1>
+
+    <!-- Navigation Links -->
+    <nav class="space-x-4 hidden md:flex">
+      <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+      <a href="#focus-timer" class="text-gray-700 hover:text-blue-600 font-medium">Focus Timer</a>
+      <a href="#tools" class="text-gray-700 hover:text-blue-600 font-medium">Tools</a>
+      <a href="#blocked" class="text-gray-700 hover:text-blue-600 font-medium">Blocked</a>
     </nav>
-    <!-- <div class="profile">🧘‍♀️</div> -->
-  </header>
 
-  <section class="hero" id="hero">
-    <div class="hero-content">
-      <h1>Eliminate Distractions<br>Unlock Productivity</h1>
-      <p>Stay focused with our minimal distraction-blocking tools and timer.</p>
-      <button class="btn primary" onclick="startFocusMode()">Start Focus Mode</button>
+    <!-- Mobile Menu Icon (Optional) -->
+    <div class="md:hidden">
+      <!-- You can later add a hamburger icon here -->
     </div>
-    <div class="hero-image">
-      <img src="distractionfree.jpg" alt="Focus" height="300px" width="400px" />
-    </div>
-  </section>
-
-  <section class="tools-section" id="focus-timer">
-    <h2>Focus Tools</h2>
-    <!-- <div class="tool-grid"> -->
-      <div class="tool-card">
-        <h3>Focus Timer</h3>
-        <p class="timer-display" id="timer">25:00</p>
-        <label for="focusMinutes">Minutes:</label>
-        <input type="number" id="focusMinutes" min="1" max="60" value="25" oninput="updateInitialDisplay()" />
-      </br>
-        <div class="preset-buttons">
-        <h4>Quick Presets</h4> 
-        <button onclick="setPreset(15)">15m</button>
-        <button onclick="setPreset(25)">25m</button>
-        <button onclick="setPreset(45)">45m</button>
-        <button onclick="setPreset(60)">60m</button>
-        </div>
-
-
-        
-      <div class="timer-buttons">
-          <button class="btn primary" onclick="startTimer()">Start</button>
-          <button class="btn secondary" onclick="resetTimer()">Reset</button>
-        </div> 
-      </div>
-      </section>
-      
-      <section class="tools-section" id="tools">
-      <div class="tool-card">
-
-        <h3>Productive Links</h3>
-        <ul class="link-list">
-          <!-- <li><a href="https://www.notion.so/">📘 Notion</a></li>
-           <li><a href="https://leetcode.com/">🧠 Leetcode</a></li> 
-           <a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer">🧠 Leetcode</a>
-
-          <li><a href="https://docs.google.com/">📝 Google Docs</a></li> -->
-          <div class="add-link-form">
-  <input type="text" id="link-name" placeholder="Site Name (e.g., Medium)" />
-  <input type="url" id="link-url" placeholder="https://medium.com" />
-  <button class="btn primary" onclick="addCustomLink()">Add Link</button>
-</div>
-
-<ul id="custom-links" class="link-list"></ul>
-
-        </ul>
-      </div>
-      </section>
-
-      <section class="tools-section" id="blocked">
-      <div class="tool-card" >
-        <h3>Blocked Sites</h3>
-        <!-- <ul class="link-list">
-          <li><button class="btn disabled" disabled>❌ YouTube</button></li>
-          <li><button class="btn disabled" disabled>❌ Instagram</button></li>
-          <li><button class="btn disabled" disabled>❌ Twitter</button></li>
-          </ul> -->
-
-           <div class="add-block-form">
-    <input type="text" id="blocked-name" placeholder="e.g., Facebook" />
-    <input type="url" id="blocked-url" placeholder="https://www.reddit.com" />
-    <button class="btn primary" onclick="addBlockedSite()">Block Site</button></div>
-  
-  <ul class="link-list" id="custom-blocked"></ul>
   </div>
+</header>
 
-        
-    <!-- </div> -->
-  </section>
+  <section id="home" class="bg-blue-50 py-16">
+  <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center gap-10">
+    <!-- Text Content -->
+    <div class="flex-1 text-center md:text-left">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-800 leading-tight">
+        Stay Focused. <br />
+        Block Distractions.
+      </h2>
+      <p class="mt-4 text-lg text-gray-600 max-w-md">
+        FocusNow helps you enter deep work mode. Start your timer, access productive tools, and avoid distractions — all in one place.
+      </p>
+      <div class="mt-6">
+        <button   onclick="startFocusMode()" class="bg-blue-600 text-white px-6 py-3 rounded-xl shadow hover:bg-blue-700 transition duration-300 font-medium">
+          Start Focus Mode
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Image -->
+    <div class="flex-1">
+      <img src="distractionfree.jpg" alt="Focus Illustration" class="w-full max-w-md mx-auto rounded-2xl shadow-lg" />
+    </div>
+  </div>
+</section>
+
+  <!-- Focus timer in tools section -->
+<section id="focus-timer" class="bg-white py-16">
+  <div class="max-w-xl mx-auto px-4 text-center">
+    <h3 class="text-3xl font-semibold text-gray-800 mb-6">Focus Timer</h3>
+
+    <!-- Timer Display -->
+    <p id="timer" class="text-6xl font-bold text-blue-600 tracking-widest mb-6">25:00</p>
+
+    <!-- Custom Time Input -->
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mb-6">
+      <input type="number" id="custom-minutes" placeholder="Minutes" min="1" max="60" class="w-full sm:w-1/2 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button onclick="setCustomTime()" class="bg-blue-500 hover:bg-blue-600 text-white font-medium px-5 py-2 rounded-xl shadow">
+        Set Time
+      </button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-center gap-6">
+      <button onclick="startTimer()" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-medium shadow">
+        ▶ Start
+      </button>
+      <button onclick="resetTimer()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-medium shadow">
+        ⏹ Reset
+      </button>
+    </div>
+  </div>
+</section>
+
+      <!-- Custom Productivity links in tools section -->
+       <section id="tools" class="bg-gray-50 py-16">
+
+       </section><div class="max-w-3xl mx-auto px-4">
+        <div class="bg-white p-6 rounded-2xl shadow-md">
+      <h3 class="text-2xl font-semibold text-gray-800 mb-4 text-center">📚 Productive Links</h3>
+
+      <!-- Default Productive Links -->
+      <ul class="space-y-3 mb-6">
+        <!-- <li><a href="https://www.notion.so/" target="_blank" class="block bg-blue-100 text-blue-800 px-4 py-2 rounded-xl hover:bg-blue-200 transition">📘 Notion</a></li> -->
+        <li><a href="https://leetcode.com/" target="_blank" class="block bg-green-100 text-green-800 px-4 py-2 rounded-xl hover:bg-green-200 transition">🧠 Leetcode</a></li>
+        <li><a href="https://docs.google.com/" target="_blank" class="block bg-yellow-100 text-yellow-800 px-4 py-2 rounded-xl hover:bg-yellow-200 transition">📝 Google Docs</a></li>
+      </ul>
+
+      <!-- Add Custom Link Form -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-6">
+        <input type="text" id="link-name" placeholder="Site Name (e.g., Medium)"
+          class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <input type="url" id="link-url" placeholder="https://medium.com"
+          class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+        <button onclick="addCustomLink()"
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-xl font-medium shadow">
+          Add Link
+        </button>
+      </div>
+
+      <!-- Custom Links List -->
+      <ul id="custom-links" class="space-y-3">
+        <!-- JS will populate custom links here -->
+      </ul>
+    </div>
+  </div>
+</section>
+
+      <!-- Custom Blocked Sites in tools section -->
+  <section id="blocked" class="bg-white py-16">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="bg-red-50 p-6 rounded-2xl shadow-md">
+      <h3 class="text-2xl font-semibold text-red-700 mb-4 text-center">❌ Blocked Sites</h3>
+
+      <!-- Add Block Site Form -->
+      <div class="flex flex-col sm:flex-row gap-4 mb-6">
+        <input type="text" id="block-site-name" placeholder="e.g., Facebook"
+          class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400" />
+        <input type="url" id="blocked-url" placeholder="https://www.facebook.com"
+          class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-400" />
+        <button onclick="addBlockedSite()"
+          class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl font-medium shadow">
+          Block Site
+        </button>
+      </div>
+
+      <!-- Blocked Sites List -->
+      <ul id="custom-blocked-list" class="space-y-3">
+        <!-- JS will render blocked sites here -->
+      </ul>
+    </div>
+  </div>
+</section>
+
+  <!-- Added ticking sound on time's up -->
   <audio id="alarm-sound" src="alarm.mp3" preload="auto"></audio>
 
-  <footer class="footer">
-    <p>&copy; 2025 FocusNow. All rights reserved.</p>
-  </footer>
+  <!-- Footer Section -->
+
+<footer class="bg-gray-900 text-gray-300 py-6 mt-16">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <p class="text-sm">
+      &copy; 2025 <span class="font-semibold">FocusNow</span>. Built with ❤️ to help you stay focused and productive.
+    </p>
+  </div>
+</footer>
+
+
+
 </body>
 </html>
